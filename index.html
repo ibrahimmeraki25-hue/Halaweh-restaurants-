@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-ar="حلاوة - Family Event Reservation" data-en="Halaweh - Family Event Reservation">حلاوة - Family Event Reservation</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Noto+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header with Logo, Navigation, Language and Theme Toggles -->
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="navbar-logo">
+                    <img src="assest/logo.png" alt="حلاوة Restaurant Logo" class="logo-image">
+                </div>
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a href="#hero" class="nav-link" data-ar="الصفحة الرئيسية" data-en="Home">الصفحة الرئيسية</a></li>
+                    <li class="nav-item"><a href="#benefits" class="nav-link" data-ar="من نحن" data-en="About Us">من نحن</a></li>
+                    <li class="nav-item"><a href="#cta-section" class="nav-link" data-ar="الموقع" data-en="Location">الموقع</a></li>
+                    <li class="nav-item"><a href="#footer" class="nav-link" data-ar="تواصل معنا" data-en="Contact">تواصل معنا</a></li>
+                </ul>
+                <div class="navbar-controls">
+                    <button id="language-toggle" class="toggle-btn" aria-label="Switch Language">AR</button>
+                    <button id="theme-toggle" class="toggle-btn" aria-label="Toggle Theme">🌙</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="restaurant-name" data-ar="حلاوة" data-en="Halaweh">حلاوة</h1>
+                <p class="hero-description" data-ar="مطعم عربي عائلي في خلدا - عمان. يقدم تجربة طعام عربي مميزة مع جو عائلي دافئ." data-en="A family-friendly Arabic restaurant in Khalda - Amman. Offering an exceptional Arabic dining experience with a warm family atmosphere."></p>
+                <div class="event-summary">
+                    <h2 data-ar="فعالية عائلية محدودة الوقت" data-en="Limited-Time Family Event"></h2>
+                    <p data-ar="استمتع بتجربة بوفيه مفتوح مع أشهى الأطباق العربية والحلويات والمشروبات" data-en="Enjoy an open buffet experience with the finest Arabic dishes, desserts, and beverages"></p>
+                    <div class="event-details">
+                        <span class="detail-item" data-ar="📅 20 يناير - 20 فبراير" data-en="📅 Jan 20 - Feb 20"></span>
+                        <span class="detail-item" data-ar="⏰ 3:00 مساءً أو 8:00 مساءً" data-en="⏰ 3:00 PM or 8:00 PM"></span>
+                        <span class="detail-item" data-ar="👨‍👩‍👧‍👦 عائلات فقط" data-en="👨‍👩‍👧‍👦 Families Only"></span>
+                    </div>
+                </div>
+                <button id="book-now-btn" class="cta-button primary" data-ar="احجز الآن" data-en="Book Now">احجز الآن</button>
+            </div>
+            <div class="hero-image">
+                <img src="https://via.placeholder.com/800x600/DEB887/8B4513?text=Family+Dining+at+Halawa" alt="Family dining at Halawa restaurant" loading="lazy">
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section id="benefits" class="benefits">
+        <div class="container">
+            <h2 data-ar="لماذا تختار حلاوة؟" data-en="Why Choose Halaweh?">لماذا تختار حلاوة؟</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">👨‍👩‍👧‍👦</div>
+                    <h3 data-ar="جو عائلي دافئ" data-en="Warm Family Atmosphere">جو عائلي دافئ</h3>
+                    <p data-ar="بيئة آمنة ومريحة لجميع أفراد العائلة مع أنشطة مخصصة للأطفال" data-en="Safe and comfortable environment for all family members with activities designed for children"></p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">🍽️</div>
+                    <h3 data-ar="بوفيه مفتوح" data-en="Open Buffet">بوفيه مفتوح</h3>
+                    <p data-ar="تجربة تناول طعام حرة مع مجموعة واسعة من الأطباق العربية الأصيلة" data-en="Free dining experience with a wide variety of authentic Arabic dishes"></p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">🧁</div>
+                    <h3 data-ar="حلويات عربية" data-en="Arabic Desserts">حلويات عربية</h3>
+                    <p data-ar="تشكيلة متنوعة من الحلويات التقليدية المعدة بأيدٍ ماهرة" data-en="Variety of traditional desserts prepared by skilled hands"></p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">🪑</div>
+                    <h3 data-ar="مقاعد مريحة" data-en="Comfortable Seating">مقاعد مريحة</h3>
+                    <p data-ar="تصميم داخلي دافئ ومريح يناسب الجلسات العائلية الطويلة" data-en="Warm and comfortable interior design perfect for long family gatherings"></p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">📍</div>
+                    <h3 data-ar="موقع متميز" data-en="Prime Location">موقع متميز</h3>
+                    <p data-ar="موقع مركزي في خلدا - عمان مع سهولة الوصول والمواقف المريحة" data-en="Central location in Khalda - Amman with easy access and comfortable parking"></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section id="cta-section" class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2 data-ar="لا تفوت الفرصة!" data-en="Don't Miss Out!">لا تفوت الفرصة!</h2>
+                <div class="cta-highlights">
+                    <div class="highlight-item">
+                        <span class="highlight-icon">⏰</span>
+                        <span data-ar="مقاعد محدودة - 200 مقعد فقط" data-en="Limited Seats - Only 200 Seats">مقاعد محدودة - 200 مقعد فقط</span>
+                    </div>
+                    <div class="highlight-item">
+                        <span class="highlight-icon">💰</span>
+                        <span data-ar="20 دينار أردني للشخص الواحد" data-en="20 JOD Per Person">20 دينار أردني للشخص الواحد</span>
+                    </div>
+                    <div class="highlight-item">
+                        <span class="highlight-icon">👨‍👩‍👧‍👦</span>
+                        <span data-ar="عائلات فقط - لا يُسمح بالأفراد" data-en="Families Only - No Individuals">عائلات فقط - لا يُسمح بالأفراد</span>
+                    </div>
+                    <div class="highlight-item">
+                        <span class="highlight-icon">📅</span>
+                        <span data-ar="متاح الخميس والجمعة والسبت فقط" data-en="Available Thursday, Friday, Saturday Only">متاح الخميس والجمعة والسبت فقط</span>
+                    </div>
+                </div>
+                <button id="cta-book-btn" class="cta-button secondary" data-ar="احجز مقعدك الآن" data-en="Reserve Your Seat Now">احجز مقعدك الآن</button>
+            </div>
+            <div class="cta-image">
+                <img src="https://via.placeholder.com/800x600/F4E4BC/6B8E23?text=Arabic+Buffet+Spread" alt="Arabic buffet spread at Halawa" loading="lazy">
+            </div>
+        </div>
+    </section>
+
+    <!-- Reservation Form (Hidden by default) -->
+    <section id="reservation-form" class="reservation-form hidden">
+        <div class="container">
+            <div class="form-container">
+                <h2 data-ar="تفاصيل الحجز" data-en="Reservation Details">تفاصيل الحجز</h2>
+                <form id="booking-form">
+                    <div class="form-group">
+                        <label for="full-name" data-ar="الاسم الكامل" data-en="Full Name">الاسم الكامل</label>
+                        <input type="text" id="full-name" name="fullName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone" data-ar="رقم الهاتف" data-en="Phone Number">رقم الهاتف</label>
+                        <input type="tel" id="phone" name="phone" required pattern="[0-9]{10}">
+                    </div>
+                    <div class="form-group">
+                        <label for="people-count" data-ar="عدد الأشخاص" data-en="Number of People">عدد الأشخاص</label>
+                        <input type="number" id="people-count" name="peopleCount" min="2" max="10" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="date" data-ar="التاريخ" data-en="Date">التاريخ</label>
+                        <input type="date" id="date" name="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="time" data-ar="الوقت" data-en="Time">الوقت</label>
+                        <select id="time" name="time" required>
+                            <option value="" data-ar="اختر الوقت" data-en="Select Time">اختر الوقت</option>
+                            <option value="15:00" data-ar="3:00 مساءً" data-en="3:00 PM">3:00 مساءً</option>
+                            <option value="20:00" data-ar="8:00 مساءً" data-en="8:00 PM">8:00 مساءً</option>
+                        </select>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="cta-button primary" data-ar="تأكيد الحجز" data-en="Confirm Reservation">تأكيد الحجز</button>
+                        <button type="button" id="cancel-booking" class="cta-button secondary" data-ar="إلغاء" data-en="Cancel">إلغاء</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Confirmation Section (Hidden by default) -->
+    <section id="confirmation-section" class="confirmation-section hidden">
+        <div class="container">
+            <div class="confirmation-content">
+                <div class="success-icon">✅</div>
+                <h2 data-ar="تم تأكيد الحجز بنجاح" data-en="Reservation Confirmed Successfully">تم تأكيد الحجز بنجاح</h2>
+                <p data-ar="شكراً لك! تم تأكيد حجزك بنجاح. سيتم التواصل معك قريباً لتأكيد التفاصيل النهائية." data-en="Thank you! Your reservation has been confirmed successfully. We'll contact you soon to confirm the final details."></p>
+                <div class="reservation-details">
+                    <h3 data-ar="تفاصيل الحجز" data-en="Reservation Details">تفاصيل الحجز</h3>
+                    <div id="confirmation-details" class="confirmation-details">
+                        <!-- Details will be populated by JavaScript -->
+                    </div>
+                </div>
+                <div class="confirmation-actions">
+                    <button id="new-reservation-btn" class="cta-button secondary" data-ar="حجز جديد" data-en="New Reservation">حجز جديد</button>
+                    <button id="close-confirmation-btn" class="cta-button primary" data-ar="إغلاق" data-en="Close">إغلاق</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section class="reviews">
+        <div class="container">
+            <h2 data-ar="آراء العائلات" data-en="Family Reviews">آراء العائلات</h2>
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="review-stars">⭐⭐⭐⭐⭐</div>
+                    <p class="review-text" data-ar="تجربة رائعة! الأطفال استمتعوا بالأنشطة والطعام كان مذهلاً. سنعود بالتأكيد!" data-en="Amazing experience! The kids loved the activities and the food was incredible. We'll definitely be back!"></p>
+                    <div class="reviewer-info">
+                        <span class="reviewer-name" data-ar="عائلة أحمد" data-en="Ahmed Family">عائلة أحمد</span>
+                        <span class="review-date" data-ar="يناير 2024" data-en="January 2024">يناير 2024</span>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">⭐⭐⭐⭐⭐</div>
+                    <p class="review-text" data-ar="المطعم جميل والطعام أصيل. الجو العائلي رائع والأسعار معقولة جداً." data-en="Beautiful restaurant with authentic food. Great family atmosphere and very reasonable prices."></p>
+                    <div class="reviewer-info">
+                        <span class="reviewer-name" data-ar="سارة وعائلتها" data-en="Sara & Family">سارة وعائلتها</span>
+                        <span class="review-date" data-ar="ديسمبر 2023" data-en="December 2023">ديسمبر 2023</span>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">⭐⭐⭐⭐⭐</div>
+                    <p class="review-text" data-ar="أفضل مكان للعائلة! الحلويات رائعة والخدمة ممتازة. أطفالنا يتحدثون عنها حتى الآن." data-en="Best place for families! Amazing desserts and excellent service. Our kids are still talking about it."></p>
+                    <div class="reviewer-info">
+                        <span class="reviewer-name" data-ar="عائلة محمد" data-en="Mohammad Family">عائلة محمد</span>
+                        <span class="review-date" data-ar="فبراير 2024" data-en="February 2024">فبراير 2024</span>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">⭐⭐⭐⭐⭐</div>
+                    <p class="review-text" data-ar="جو دافئ ومريح. الطعام متنوع والكميات كافية للجميع. تجربة لا تُنسى!" data-en="Warm and comfortable atmosphere. Diverse food and sufficient quantities for everyone. An unforgettable experience!"></p>
+                    <div class="reviewer-info">
+                        <span class="reviewer-name" data-ar="فاطمة والأطفال" data-en="Fatima & Kids">فاطمة والأطفال</span>
+                        <span class="review-date" data-ar="يناير 2024" data-en="January 2024">يناير 2024</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="footer" class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <div class="logo">
+                        <img src="assest/logo.png" alt="حلاوة Restaurant Logo" class="logo-image">
+                    </div>
+                    <h3 data-ar="حلاوة" data-en="Halaweh">حلاوة</h3>
+                </div>
+                <div class="footer-info">
+                    <p data-ar="📍 خلدا - عمان" data-en="📍 Khalda - Amman">📍 خلدا - عمان</p>
+                    <a href="https://wa.me/962777123456" class="whatsapp-link" data-ar="📱 تواصل عبر واتساب" data-en="📱 Contact via WhatsApp">📱 تواصل عبر واتساب</a>
+                </div>
+                <div class="footer-controls">
+                    <button id="footer-language-toggle" class="toggle-btn" aria-label="Switch Language">AR</button>
+                    <button id="footer-theme-toggle" class="toggle-btn" aria-label="Toggle Theme">🌙</button>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p data-ar="© 2024 حلاوة. جميع الحقوق محفوظة." data-en="© 2024 Halaweh. All rights reserved.">&copy; 2024 حلاوة. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmation-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="success-icon">✅</div>
+                <h3 data-ar="تم تأكيد الحجز بنجاح" data-en="Reservation Confirmed Successfully">تم تأكيد الحجز بنجاح</h3>
+                <p data-ar="شكراً لك! سيتم التواصل معك قريباً لتأكيد التفاصيل." data-en="Thank you! We'll contact you soon to confirm the details."></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
