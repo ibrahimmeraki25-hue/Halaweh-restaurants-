@@ -98,10 +98,32 @@ function setupEventListeners() {
             e.preventDefault();
             const target = document.querySelector(this.getAttribute('href'));
             if (target) {
+                // Remove previous highlight from location
+                const locationElement = document.getElementById('location');
+                if (locationElement) {
+                    locationElement.classList.remove('location-highlight');
+                }
+                
                 target.scrollIntoView({
                     behavior: 'smooth',
-                    block: 'start'
+                    block: 'center'
                 });
+                
+                // Add highlight effect for location
+                if (target.id === 'location') {
+                    setTimeout(() => {
+                        target.classList.add('location-highlight');
+                        // Update URL hash
+                        window.history.pushState(null, '', '#location');
+                        // Remove highlight after animation
+                        setTimeout(() => {
+                            target.classList.remove('location-highlight');
+                        }, 2000);
+                    }, 500);
+                } else {
+                    // Update URL hash for other links
+                    window.history.pushState(null, '', this.getAttribute('href'));
+                }
             }
         });
     });

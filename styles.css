@@ -209,10 +209,31 @@ p {
 /* Hero Section */
 .hero {
   padding: 120px 0 80px;
-  background: linear-gradient(135deg, var(--secondary-bg) 0%, var(--accent-bg) 100%);
-  min-height: 100vh;
+  background-image: url('assest/1.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  position: relative;
+  min-height: 85vh;
   display: flex;
   align-items: center;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+.hero .container {
+  position: relative;
+  z-index: 2;
 }
 
 .hero-content {
@@ -229,15 +250,22 @@ p {
 
 .restaurant-name {
   font-size: 3rem;
-  color: var(--brand-primary);
+  color: #FFFFFF;
   margin-bottom: 1rem;
-  text-shadow: 2px 2px 4px var(--shadow-color);
+  font-weight: 700;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7),
+               0 0 15px rgba(0, 0, 0, 0.5);
 }
 
 .hero-description {
   font-size: 1.2rem;
   margin-bottom: 2rem;
   max-width: 500px;
+  color: #FFFFFF;
+  font-weight: 500;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7),
+               0 0 10px rgba(0, 0, 0, 0.4);
+  line-height: 1.7;
 }
 
 .event-summary {
@@ -303,12 +331,6 @@ p {
   box-shadow: 0 8px 25px rgba(107, 142, 35, 0.3);
 }
 
-.hero-image img {
-  width: 100%;
-  max-width: 500px;
-  border-radius: 20px;
-  box-shadow: 0 15px 40px var(--shadow-color);
-}
 
 /* Benefits Section */
 .benefits {
@@ -336,11 +358,78 @@ p {
   box-shadow: 0 8px 25px var(--shadow-color);
   border: 2px solid var(--border-color);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.benefit-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(244, 228, 188, 0.85);
+  z-index: 1;
+  transition: background 0.3s ease;
+}
+
+[data-theme="dark"] .benefit-card::before {
+  background: rgba(26, 20, 16, 0.85);
+}
+
+.benefit-card > * {
+  position: relative;
+  z-index: 2;
+}
+
+.benefit-card-1 {
+  background-image: url('assest/family.jpg');
+}
+
+.benefit-card-2 {
+  background-image: url('assest/bofih.jpg');
+}
+
+.benefit-card-3 {
+  background-image: url('assest/6.jpg');
+}
+
+.benefit-card-4 {
+  background-image: url('assest/2.jpg');
+}
+
+.benefit-card-5 {
+  background-image: url('assest/3.jpg');
 }
 
 .benefit-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 15px 35px var(--shadow-color);
+}
+
+.benefit-card:hover::before {
+  background: rgba(244, 228, 188, 0.5);
+}
+
+[data-theme="dark"] .benefit-card:hover::before {
+  background: rgba(26, 20, 16, 0.75);
+}
+
+/* تحسين وضوح النصوص عند hover في اللايت مود */
+.benefit-card:hover h3 {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.benefit-card:hover p {
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+.benefit-card:hover .benefit-icon {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
 }
 
 .benefit-icon {
@@ -353,11 +442,43 @@ p {
   margin-bottom: 1rem;
 }
 
+.benefit-card p {
+  color: var(--text-secondary);
+}
+
 /* CTA Section */
 .cta-section {
   padding: 80px 0;
-  background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-secondary) 100%);
+  background-image: url('assest/5.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  position: relative;
   color: white;
+  transition: color 0.3s ease;
+}
+
+/* Dark mode: Lighter text for better visibility */
+[data-theme="dark"] .cta-section,
+html[data-theme="dark"] .cta-section {
+  color: #F4E4BC !important;
+}
+
+.cta-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: transparent;
+  z-index: 1;
+}
+
+.cta-section .container {
+  position: relative;
+  z-index: 2;
 }
 
 .cta-content {
@@ -370,6 +491,13 @@ p {
 .cta-content h2 {
   color: white;
   margin-bottom: 2rem;
+  transition: color 0.3s ease;
+}
+
+/* Dark mode: Lighter heading */
+[data-theme="dark"] .cta-content h2,
+html[data-theme="dark"] .cta-content h2 {
+  color: #F4E4BC !important;
 }
 
 .cta-highlights {
@@ -387,10 +515,29 @@ p {
   background: rgba(255, 255, 255, 0.1);
   border-radius: 10px;
   backdrop-filter: blur(10px);
+  color: white;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Dark mode: Lighter background and text */
+[data-theme="dark"] .highlight-item,
+html[data-theme="dark"] .highlight-item {
+  background: rgba(255, 255, 255, 0.15) !important;
+  color: #F4E4BC !important;
+}
+
+[data-theme="dark"] .highlight-item span,
+html[data-theme="dark"] .highlight-item span {
+  color: #F4E4BC !important;
 }
 
 .highlight-icon {
   font-size: 1.5rem;
+}
+
+.highlight-item span {
+  color: inherit;
+  transition: color 0.3s ease;
 }
 
 .cta-image img {
@@ -556,12 +703,34 @@ p {
 /* Reviews Section */
 .reviews {
   padding: 80px 0;
-  background: var(--secondary-bg);
+  background-image: url('assest/4.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  position: relative;
+}
+
+.reviews::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: transparent;
+  z-index: 1;
+  transition: background 0.3s ease;
+}
+
+.reviews .container {
+  position: relative;
+  z-index: 2;
 }
 
 .reviews h2 {
   text-align: center;
-  color: var(--brand-primary);
+  color: white;
   margin-bottom: 3rem;
 }
 
@@ -572,11 +741,20 @@ p {
 }
 
 .review-card {
-  background: var(--primary-bg);
+  background: rgba(255, 255, 255, 0.95);
   padding: 2rem;
   border-radius: 15px;
-  box-shadow: 0 8px 25px var(--shadow-color);
-  border: 2px solid var(--border-color);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  transition: background 0.3s ease;
+}
+
+/* Dark mode: Darker card background */
+[data-theme="dark"] .review-card {
+  background: rgba(26, 20, 16, 0.92);
+  border: 2px solid rgba(244, 228, 188, 0.2);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
 }
 
 .review-stars {
@@ -657,6 +835,45 @@ p {
 
 .footer-info a:hover {
   color: var(--brand-primary);
+}
+
+/* Location highlight effect */
+#location {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: all 0.5s ease;
+  display: inline-block;
+  margin: 0 auto;
+}
+
+#location.location-highlight,
+#location:target {
+  background-color: var(--brand-primary);
+  color: white;
+  box-shadow: 0 4px 15px rgba(139, 69, 19, 0.4);
+  animation: locationHighlight 2s ease;
+}
+
+[data-theme="dark"] #location.location-highlight,
+[data-theme="dark"] #location:target {
+  background-color: var(--brand-secondary);
+  color: var(--primary-bg);
+  box-shadow: 0 4px 15px rgba(210, 105, 30, 0.5);
+}
+
+@keyframes locationHighlight {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 4px 15px rgba(139, 69, 19, 0.4);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(139, 69, 19, 0.6);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 4px 15px rgba(139, 69, 19, 0.4);
+  }
 }
 
 .footer-controls {
@@ -755,7 +972,9 @@ p {
   }
 
   .hero {
-    padding: 140px 0 40px;
+    padding: 120px 0 40px;
+    min-height: 80vh;
+    background-attachment: scroll;
   }
 
   .restaurant-name {
