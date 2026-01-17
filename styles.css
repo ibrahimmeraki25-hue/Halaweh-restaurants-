@@ -421,15 +421,33 @@ p {
 
 /* تحسين وضوح النصوص عند hover في اللايت مود */
 .benefit-card:hover h3 {
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  color: #1A0F08; /* Even darker brown for hover contrast */
 }
 
 .benefit-card:hover p {
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  color: #1A0F08; /* Even darker brown for hover contrast */
 }
 
 .benefit-card:hover .benefit-icon {
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+/* Dark mode colors - keep original colors */
+[data-theme="dark"] .benefit-card h3 {
+  color: var(--brand-primary);
+}
+
+[data-theme="dark"] .benefit-card p {
+  color: var(--text-secondary);
+}
+
+/* Dark mode hover colors - keep original light colors */
+[data-theme="dark"] .benefit-card:hover h3 {
+  color: var(--brand-primary);
+}
+
+[data-theme="dark"] .benefit-card:hover p {
+  color: var(--text-secondary);
 }
 
 .benefit-icon {
@@ -438,12 +456,12 @@ p {
 }
 
 .benefit-card h3 {
-  color: var(--brand-primary);
+  color: #2F1B14; /* Dark brown for better contrast */
   margin-bottom: 1rem;
 }
 
 .benefit-card p {
-  color: var(--text-secondary);
+  color: #2F1B14; /* Dark brown for better contrast */
 }
 
 /* CTA Section */
@@ -512,10 +530,10 @@ html[data-theme="dark"] .cta-content h2 {
   align-items: center;
   gap: 1rem;
   padding: 1rem;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.7); /* Dark background for better contrast */
   border-radius: 10px;
   backdrop-filter: blur(10px);
-  color: white;
+  color: #F4E4BC; /* Light cream text for visibility */
   transition: background 0.3s ease, color 0.3s ease;
 }
 
@@ -780,6 +798,24 @@ html[data-theme="dark"] .highlight-item span {
 .reviewer-name {
   font-weight: 600;
   color: var(--brand-primary);
+}
+
+/* Improve text contrast in light mode for review cards */
+.review-card .review-text {
+  color: #2F1B14; /* Dark brown for better contrast */
+}
+
+.review-card .reviewer-info {
+  color: #5D4E37; /* Medium brown for better contrast */
+}
+
+/* Keep original colors in dark mode for review cards */
+[data-theme="dark"] .review-card .review-text {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .review-card .reviewer-info {
+  color: var(--text-muted);
 }
 
 /* Footer */
