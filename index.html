@@ -18,6 +18,7 @@
                 <div class="navbar-logo">
                     <img src="assest/logo.png" alt="حلاوة Restaurant Logo" class="logo-image">
                 </div>
+                <button class="hamburger-menu" id="hamburger-menu" aria-label="Menu">☰</button>
                 <ul class="navbar-nav">
                     <li class="nav-item"><a href="#hero" class="nav-link" data-ar="الصفحة الرئيسية" data-en="Home">الصفحة الرئيسية</a></li>
                     <li class="nav-item"><a href="#benefits" class="nav-link" data-ar="فعالياتنا" data-en="Events">فعالياتنا</a></li>
@@ -48,6 +49,66 @@
                     </div>
                 </div>
                 <button id="book-now-btn" class="cta-button primary" data-ar="احجز الآن" data-en="Book Now">احجز الآن</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reservation Form (Hidden by default) -->
+    <section id="reservation-form" class="reservation-form hidden">
+        <div class="container">
+            <div class="form-container">
+                <h2 data-ar="تفاصيل الحجز" data-en="Reservation Details">تفاصيل الحجز</h2>
+                <form id="booking-form">
+                    <div class="form-group">
+                        <label for="full-name" data-ar="الاسم الكامل" data-en="Full Name">الاسم الكامل</label>
+                        <input type="text" id="full-name" name="fullName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone" data-ar="رقم الهاتف" data-en="Phone Number">رقم الهاتف</label>
+                        <input type="tel" id="phone" name="phone" placeholder="079*********" required pattern="[0-9]{10}">
+                    </div>
+                    <div class="form-group">
+                        <label for="people-count" data-ar="عدد الأشخاص" data-en="Number of People">عدد الأشخاص</label>
+                        <input type="number" id="people-count" name="peopleCount" max="1000" min="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="date" data-ar="التاريخ" data-en="Date">التاريخ</label>
+                        <input type="date" id="date" name="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="time" data-ar="الوقت" data-en="Time">الوقت</label>
+                        <select id="time" name="time" required>
+                            <option value="" data-ar="اختر الوقت" data-en="Select Time">اختر الوقت</option>
+                            <option value="15:00" data-ar="3:00 مساءً" data-en="3:00 PM">3:00 مساءً</option>
+                            <option value="20:00" data-ar="8:00 مساءً" data-en="8:00 PM">8:00 مساءً</option>
+                        </select>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="cta-button primary" data-ar="تأكيد الحجز" data-en="Confirm Reservation">تأكيد الحجز</button>
+                        <button type="button" id="cancel-booking" class="cta-button secondary" data-ar="إلغاء" data-en="Cancel">إلغاء</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Confirmation Section (Hidden by default) -->
+    <section id="confirmation-section" class="confirmation-section hidden">
+        <div class="container">
+            <div class="confirmation-content">
+                <div class="success-icon">✅</div>
+                <h2 data-ar="تم تأكيد الحجز بنجاح" data-en="Reservation Confirmed Successfully">تم تأكيد الحجز بنجاح</h2>
+                <p data-ar="شكراً لك! تم تأكيد حجزك بنجاح. سيتم التواصل معك قريباً لتأكيد التفاصيل النهائية." data-en="Thank you! Your reservation has been confirmed successfully. We'll contact you soon to confirm the final details."></p>
+                <div class="reservation-details">
+                    <h3 data-ar="تفاصيل الحجز" data-en="Reservation Details">تفاصيل الحجز</h3>
+                    <div id="confirmation-details" class="confirmation-details">
+                        <!-- Details will be populated by JavaScript -->
+                    </div>
+                </div>
+                <div class="confirmation-actions">
+                    <button id="new-reservation-btn" class="cta-button secondary" data-ar="حجز جديد" data-en="New Reservation">حجز جديد</button>
+                    <button id="close-confirmation-btn" class="cta-button primary" data-ar="إغلاق" data-en="Close">إغلاق</button>
+                </div>
             </div>
         </div>
     </section>
@@ -114,66 +175,6 @@
         </div>
     </section>
 
-    <!-- Reservation Form (Hidden by default) -->
-    <section id="reservation-form" class="reservation-form hidden">
-        <div class="container">
-            <div class="form-container">
-                <h2 data-ar="تفاصيل الحجز" data-en="Reservation Details">تفاصيل الحجز</h2>
-                <form id="booking-form">
-                    <div class="form-group">
-                        <label for="full-name" data-ar="الاسم الكامل" data-en="Full Name">الاسم الكامل</label>
-                        <input type="text" id="full-name" name="fullName" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="phone" data-ar="رقم الهاتف" data-en="Phone Number">رقم الهاتف</label>
-                        <input type="tel" id="phone" name="phone" required pattern="[0-9]{10}">
-                    </div>
-                    <div class="form-group">
-                        <label for="people-count" data-ar="عدد الأشخاص" data-en="Number of People">عدد الأشخاص</label>
-                        <input type="number" id="people-count" name="peopleCount" min="2" max="10" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="date" data-ar="التاريخ" data-en="Date">التاريخ</label>
-                        <input type="date" id="date" name="date" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="time" data-ar="الوقت" data-en="Time">الوقت</label>
-                        <select id="time" name="time" required>
-                            <option value="" data-ar="اختر الوقت" data-en="Select Time">اختر الوقت</option>
-                            <option value="15:00" data-ar="3:00 مساءً" data-en="3:00 PM">3:00 مساءً</option>
-                            <option value="20:00" data-ar="8:00 مساءً" data-en="8:00 PM">8:00 مساءً</option>
-                        </select>
-                    </div>
-                    <div class="form-actions">
-                        <button type="submit" class="cta-button primary" data-ar="تأكيد الحجز" data-en="Confirm Reservation">تأكيد الحجز</button>
-                        <button type="button" id="cancel-booking" class="cta-button secondary" data-ar="إلغاء" data-en="Cancel">إلغاء</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <!-- Confirmation Section (Hidden by default) -->
-    <section id="confirmation-section" class="confirmation-section hidden">
-        <div class="container">
-            <div class="confirmation-content">
-                <div class="success-icon">✅</div>
-                <h2 data-ar="تم تأكيد الحجز بنجاح" data-en="Reservation Confirmed Successfully">تم تأكيد الحجز بنجاح</h2>
-                <p data-ar="شكراً لك! تم تأكيد حجزك بنجاح. سيتم التواصل معك قريباً لتأكيد التفاصيل النهائية." data-en="Thank you! Your reservation has been confirmed successfully. We'll contact you soon to confirm the final details."></p>
-                <div class="reservation-details">
-                    <h3 data-ar="تفاصيل الحجز" data-en="Reservation Details">تفاصيل الحجز</h3>
-                    <div id="confirmation-details" class="confirmation-details">
-                        <!-- Details will be populated by JavaScript -->
-                    </div>
-                </div>
-                <div class="confirmation-actions">
-                    <button id="new-reservation-btn" class="cta-button secondary" data-ar="حجز جديد" data-en="New Reservation">حجز جديد</button>
-                    <button id="close-confirmation-btn" class="cta-button primary" data-ar="إغلاق" data-en="Close">إغلاق</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Reviews Section -->
     <section class="reviews">
         <div class="container">
@@ -227,18 +228,39 @@
                 </div>
                 <div class="footer-info">
                     <p id="location" data-ar="📍 خلدا - عمان" data-en="📍 Khalda - Amman">📍 خلدا - عمان</p>
-                    <a href="https://wa.me/962777123456" class="whatsapp-link" data-ar="📱 تواصل عبر واتساب" data-en="📱 Contact via WhatsApp">📱 تواصل عبر واتساب</a>
+                    <a href="https://wa.me/962797720652" class="whatsapp-link" data-ar="📱 تواصل عبر واتساب" data-en="📱 Contact via WhatsApp">📱 تواصل عبر واتساب</a>
                 </div>
                 <div class="footer-controls">
                     <button id="footer-language-toggle" class="toggle-btn" aria-label="Switch Language">AR</button>
                     <button id="footer-theme-toggle" class="toggle-btn" aria-label="Toggle Theme">🌙</button>
+                    <button id="share-btn" class="toggle-btn" aria-label="Share Website" title="Share Website">📤</button>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p data-ar="© 2024 حلاوة. جميع الحقوق محفوظة." data-en="© 2024 Halaweh. All rights reserved.">&copy; 2024 حلاوة. جميع الحقوق محفوظة.</p>
+                <p data-ar="© 2026 حلاوة. جميع الحقوق محفوظة." data-en="© 2026 Halaweh. All rights reserved.">&copy; 2026 حلاوة. جميع الحقوق محفوظة.</p>
             </div>
         </div>
     </footer>
+
+    <!-- Mobile Sidebar Menu -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h3 data-ar="القائمة" data-en="Menu">القائمة</h3>
+            <button class="sidebar-close" id="sidebar-close">×</button>
+        </div>
+        <ul class="sidebar-nav">
+            <li class="sidebar-nav-item"><a href="#hero" class="sidebar-nav-link" data-ar="الصفحة الرئيسية" data-en="Home">الصفحة الرئيسية</a></li>
+            <li class="sidebar-nav-item"><a href="#benefits" class="sidebar-nav-link" data-ar="فعالياتنا" data-en="Events">فعالياتنا</a></li>
+            <li class="sidebar-nav-item"><a href="#location" class="sidebar-nav-link" data-ar="الموقع" data-en="Location">الموقع</a></li>
+            <li class="sidebar-nav-item"><a href="#footer" class="sidebar-nav-link" data-ar="تواصل معنا" data-en="Contact">تواصل معنا</a></li>
+        </ul>
+        <div class="sidebar-controls">
+            <button id="sidebar-language-toggle" class="toggle-btn" aria-label="Switch Language">AR</button>
+            <button id="sidebar-theme-toggle" class="toggle-btn" aria-label="Toggle Theme">🌙</button>
+            <button id="sidebar-share-btn" class="toggle-btn" aria-label="Share Website">📤</button>
+        </div>
+    </div>
 
     <!-- Confirmation Modal -->
     <div id="confirmation-modal" class="modal hidden">
@@ -250,6 +272,21 @@
                 <div class="success-icon">✅</div>
                 <h3 data-ar="تم تأكيد الحجز بنجاح" data-en="Reservation Confirmed Successfully">تم تأكيد الحجز بنجاح</h3>
                 <p data-ar="شكراً لك! سيتم التواصل معك قريباً لتأكيد التفاصيل." data-en="Thank you! We'll contact you soon to confirm the details."></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Error/Notification Modal -->
+    <div id="error-modal" class="modal hidden">
+        <div class="modal-content error-modal-content">
+            <div class="modal-header">
+                <span class="modal-close" id="error-modal-close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="modal-icon">⚠️</div>
+                <h3 id="modal-title" data-ar="خطأ في الحجز" data-en="Booking Error">خطأ في الحجز</h3>
+                <p id="error-message" data-ar="حدث خطأ غير متوقع" data-en="An unexpected error occurred">حدث خطأ غير متوقع</p>
+                <button id="error-modal-ok" class="cta-button primary" data-ar="موافق" data-en="OK">موافق</button>
             </div>
         </div>
     </div>

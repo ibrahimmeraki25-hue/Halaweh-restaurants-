@@ -7,6 +7,14 @@ const languageToggle = document.getElementById('language-toggle');
 const footerLanguageToggle = document.getElementById('footer-language-toggle');
 const themeToggle = document.getElementById('theme-toggle');
 const footerThemeToggle = document.getElementById('footer-theme-toggle');
+const shareBtn = document.getElementById('share-btn');
+const hamburgerMenu = document.getElementById('hamburger-menu');
+const sidebar = document.getElementById('sidebar');
+const sidebarOverlay = document.getElementById('sidebar-overlay');
+const sidebarClose = document.getElementById('sidebar-close');
+const sidebarLanguageToggle = document.getElementById('sidebar-language-toggle');
+const sidebarThemeToggle = document.getElementById('sidebar-theme-toggle');
+const sidebarShareBtn = document.getElementById('sidebar-share-btn');
 const bookNowBtn = document.getElementById('book-now-btn');
 const ctaBookBtn = document.getElementById('cta-book-btn');
 const reservationForm = document.getElementById('reservation-form');
@@ -14,11 +22,18 @@ const bookingForm = document.getElementById('booking-form');
 const cancelBooking = document.getElementById('cancel-booking');
 const confirmationModal = document.getElementById('confirmation-modal');
 const modalClose = document.querySelector('.modal-close');
+const errorModal = document.getElementById('error-modal');
+const errorModalClose = document.getElementById('error-modal-close');
+const errorMessage = document.getElementById('error-message');
+const errorModalOk = document.getElementById('error-modal-ok');
 const dateInput = document.getElementById('date');
 const timeSelect = document.getElementById('time');
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
+    // Force scroll to top on page load
+    window.scrollTo(0, 0);
+
     initializeApp();
     setupEventListeners();
     setDateRestrictions();
@@ -57,6 +72,17 @@ function setupEventListeners() {
     themeToggle.addEventListener('click', toggleTheme);
     footerThemeToggle.addEventListener('click', toggleTheme);
 
+    // Share button
+    shareBtn.addEventListener('click', shareWebsite);
+
+    // Mobile sidebar
+    hamburgerMenu.addEventListener('click', openSidebar);
+    sidebarClose.addEventListener('click', closeSidebar);
+    sidebarOverlay.addEventListener('click', closeSidebar);
+    sidebarLanguageToggle.addEventListener('click', toggleLanguage);
+    sidebarThemeToggle.addEventListener('click', toggleTheme);
+    sidebarShareBtn.addEventListener('click', shareWebsite);
+
     // Book now buttons
     bookNowBtn.addEventListener('click', showReservationForm);
     ctaBookBtn.addEventListener('click', showReservationForm);
@@ -76,7 +102,16 @@ function setupEventListeners() {
     modalClose.addEventListener('click', hideConfirmationModal);
     confirmationModal.addEventListener('click', function(e) {
         if (e.target === confirmationModal) {
-            hideConfirmationModal();
+            hideConfirmationSection();
+        }
+    });
+
+    // Error modal interactions
+    errorModalClose.addEventListener('click', hideErrorModal);
+    errorModalOk.addEventListener('click', hideErrorModal);
+    errorModal.addEventListener('click', function(e) {
+        if (e.target === errorModal) {
+            hideErrorModal();
         }
     });
 
@@ -88,7 +123,9 @@ function setupEventListeners() {
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
             hideReservationForm();
-            hideConfirmationModal();
+            hideConfirmationSection();
+            hideErrorModal();
+            closeSidebar();
         }
     });
 
@@ -135,6 +172,9 @@ function toggleLanguage() {
     applyLanguage(currentLanguage);
     updateToggleButtons();
 
+    // Close sidebar on language change
+    closeSidebar();
+
     // Save preference
     localStorage.setItem('halawa-language', currentLanguage);
 }
@@ -160,6 +200,7 @@ function applyLanguage(lang) {
     // Update all text content based on data attributes
     updateTextContent(lang);
     updateNavLinks(lang);
+    updateSidebarNavLinks(lang);
 
     // Update logo based on language
     updateLogoText(lang);
@@ -195,6 +236,17 @@ function updateNavLinks(lang) {
     });
 }
 
+function updateSidebarNavLinks(lang) {
+    const sidebarNavLinks = document.querySelectorAll('.sidebar-nav-link');
+
+    sidebarNavLinks.forEach(link => {
+        const text = link.getAttribute(`data-${lang}`);
+        if (text) {
+            link.textContent = text;
+        }
+    });
+}
+
 // SVG template for Arabic logo with proper Arabic text rendering
 const arabicLogoSVG = `<svg viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg" style="direction: rtl;">
     <defs>
@@ -214,9 +266,20 @@ function updateLogoText(lang) {
 
 // Theme switching functionality
 function toggleTheme() {
-    currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+    // Cycle through themes: light -> dark -> copper -> light
+    if (currentTheme === 'light') {
+        currentTheme = 'dark';
+    } else if (currentTheme === 'dark') {
+        currentTheme = 'copper';
+    } else {
+        currentTheme = 'light';
+    }
+
     applyTheme(currentTheme);
     updateToggleButtons();
+
+    // Close sidebar on theme change
+    closeSidebar();
 
     // Save preference
     localStorage.setItem('halawa-theme', currentTheme);
@@ -232,11 +295,20 @@ function updateToggleButtons() {
     const langText = currentLanguage === 'ar' ? 'EN' : 'AR';
     languageToggle.textContent = langText;
     footerLanguageToggle.textContent = langText;
+    sidebarLanguageToggle.textContent = langText;
 
-    // Update theme button icon
-    const themeIcon = currentTheme === 'light' ? '🌙' : '☀️';
+    // Update theme button icon based on current theme
+    let themeIcon;
+    if (currentTheme === 'light') {
+        themeIcon = '☀️'; // Sun for light mode
+    } else if (currentTheme === 'dark') {
+        themeIcon = '🌙'; // Moon for dark mode
+    } else {
+        themeIcon = '🥉'; // Copper medal for copper mode
+    }
     themeToggle.textContent = themeIcon;
     footerThemeToggle.textContent = themeIcon;
+    sidebarThemeToggle.textContent = themeIcon;
 }
 
 // Form visibility functions
@@ -269,36 +341,75 @@ function setDateRestrictions() {
     const today = new Date();
     const currentYear = today.getFullYear();
 
-    // Set minimum date to January 20, 2025
-    const minDate = new Date(currentYear, 0, 20); // January 20
-    const maxDate = new Date(currentYear, 1, 20); // February 20
+    // Define allowed booking dates
+    const allowedDates = [
+        // January dates
+        new Date(currentYear, 0, 22), // January 22
+        new Date(currentYear, 0, 23), // January 23
+        new Date(currentYear, 0, 24), // January 24
+        new Date(currentYear, 0, 29), // January 29
+        new Date(currentYear, 0, 30), // January 30
+        new Date(currentYear, 0, 31), // January 31
+        // February dates
+        new Date(currentYear, 1, 5),  // February 5
+        new Date(currentYear, 1, 6),  // February 6
+        new Date(currentYear, 1, 7),  // February 7
+        new Date(currentYear, 1, 12), // February 12
+        new Date(currentYear, 1, 13), // February 13
+        new Date(currentYear, 1, 14), // February 14
+        new Date(currentYear, 1, 19), // February 19
+        new Date(currentYear, 1, 20)  // February 20
+    ];
 
-    // If current date is after Feb 20, set for next year
-    if (today > maxDate) {
-        minDate.setFullYear(currentYear + 1);
-        maxDate.setFullYear(currentYear + 1);
-    }
-    // If current date is before Jan 20, keep current year
-    else if (today < minDate) {
-        // Keep dates as is
-    }
-    // If between Jan 20 and Feb 20, adjust min date to today if today is Thursday-Saturday
-    else {
-        const dayOfWeek = today.getDay(); // 0 = Sunday, 4 = Thursday, 5 = Friday, 6 = Saturday
-        if (dayOfWeek === 4 || dayOfWeek === 5 || dayOfWeek === 6) {
-            // Keep today as min date
-        } else {
-            // Find next Thursday
-            const daysUntilThursday = (4 - dayOfWeek + 7) % 7;
-            minDate.setDate(today.getDate() + daysUntilThursday);
+    // Find the earliest allowed date that is today or in the future
+    let defaultDate = null;
+    for (const date of allowedDates) {
+        if (date >= today) {
+            defaultDate = date;
+            break;
         }
     }
 
-    dateInput.min = formatDateForInput(minDate);
-    dateInput.max = formatDateForInput(maxDate);
+    // If no future dates available, set for next year
+    if (!defaultDate) {
+        const nextYear = currentYear + 1;
+        allowedDates.forEach(date => date.setFullYear(nextYear));
+        defaultDate = allowedDates[0];
+    }
 
-    // Set default value to first available Thursday
-    dateInput.value = formatDateForInput(minDate);
+    // Set min and max dates to the range
+    dateInput.min = formatDateForInput(allowedDates[0]);
+    dateInput.max = formatDateForInput(allowedDates[allowedDates.length - 1]);
+
+    // Set default value to first available date
+    dateInput.value = formatDateForInput(defaultDate);
+
+    // Prevent manual typing in date input
+    dateInput.addEventListener('keydown', function(e) {
+        e.preventDefault();
+    });
+
+    // Prevent paste in date input
+    dateInput.addEventListener('paste', function(e) {
+        e.preventDefault();
+    });
+
+    // Add custom validation to only allow specific dates
+    dateInput.addEventListener('change', function() {
+        const selectedDate = new Date(this.value);
+        const isAllowedDate = allowedDates.some(allowedDate =>
+            selectedDate.toDateString() === allowedDate.toDateString()
+        );
+
+        if (!isAllowedDate) {
+            this.setCustomValidity(currentLanguage === 'ar'
+                ? 'يُرجى اختيار تاريخ من التواريخ المسموح بها فقط'
+                : 'Please select a date from the allowed dates only'
+            );
+        } else {
+            this.setCustomValidity('');
+        }
+    });
 }
 
 function formatDateForInput(date) {
@@ -307,26 +418,37 @@ function formatDateForInput(date) {
 
 function validateDateSelection() {
     const selectedDate = new Date(dateInput.value);
-    const dayOfWeek = selectedDate.getDay();
+    const currentYear = new Date().getFullYear();
 
-    // Check if selected day is Thursday (4), Friday (5), or Saturday (6)
-    if (dayOfWeek !== 4 && dayOfWeek !== 5 && dayOfWeek !== 6) {
-        alert(currentLanguage === 'ar'
-            ? 'يُرجى اختيار يوم الخميس أو الجمعة أو السبت فقط'
-            : 'Please select Thursday, Friday, or Saturday only'
-        );
-        dateInput.value = '';
-        return false;
-    }
+    // Define allowed booking dates
+    const allowedDates = [
+        // January dates
+        new Date(currentYear, 0, 22), // January 22
+        new Date(currentYear, 0, 23), // January 23
+        new Date(currentYear, 0, 24), // January 24
+        new Date(currentYear, 0, 29), // January 29
+        new Date(currentYear, 0, 30), // January 30
+        new Date(currentYear, 0, 31), // January 31
+        // February dates
+        new Date(currentYear, 1, 5),  // February 5
+        new Date(currentYear, 1, 6),  // February 6
+        new Date(currentYear, 1, 7),  // February 7
+        new Date(currentYear, 1, 12), // February 12
+        new Date(currentYear, 1, 13), // February 13
+        new Date(currentYear, 1, 14), // February 14
+        new Date(currentYear, 1, 19), // February 19
+        new Date(currentYear, 1, 20)  // February 20
+    ];
 
-    // Check if date is within valid range
-    const minDate = new Date(dateInput.min);
-    const maxDate = new Date(dateInput.max);
+    // Check if selected date is in the allowed dates list
+    const isAllowedDate = allowedDates.some(allowedDate =>
+        selectedDate.toDateString() === allowedDate.toDateString()
+    );
 
-    if (selectedDate < minDate || selectedDate > maxDate) {
-        alert(currentLanguage === 'ar'
-            ? 'يُرجى اختيار تاريخ بين 20 يناير و 20 فبراير'
-            : 'Please select a date between January 20 and February 20'
+    if (!isAllowedDate) {
+        showErrorModal(currentLanguage === 'ar'
+            ? 'يُرجى اختيار تاريخ من التواريخ المسموح بها فقط: 22-24 يناير، 29-31 يناير، 5-7 فبراير، 12-14 فبراير، 19-20 فبراير'
+            : 'Please select a date from the allowed dates only: January 22-24, 29-31; February 5-7, 12-14, 19-20'
         );
         dateInput.value = '';
         return false;
@@ -338,7 +460,7 @@ function validateDateSelection() {
 function validateTimeSelection() {
     const selectedTime = timeSelect.value;
     if (!selectedTime) {
-        alert(currentLanguage === 'ar'
+        showErrorModal(currentLanguage === 'ar'
             ? 'يُرجى اختيار وقت الحجز'
             : 'Please select reservation time'
         );
@@ -384,7 +506,7 @@ function validateForm() {
 
     // Name validation
     if (!fullName || fullName.length < 2) {
-        alert(currentLanguage === 'ar'
+        showErrorModal(currentLanguage === 'ar'
             ? 'يُرجى إدخال اسم كامل صحيح'
             : 'Please enter a valid full name'
         );
@@ -395,7 +517,7 @@ function validateForm() {
     // Phone validation
     const phoneRegex = /^[0-9]{10}$/;
     if (!phone || !phoneRegex.test(phone)) {
-        alert(currentLanguage === 'ar'
+        showErrorModal(currentLanguage === 'ar'
             ? 'يُرجى إدخال رقم هاتف صحيح مكون من 10 أرقام'
             : 'Please enter a valid 10-digit phone number'
         );
@@ -404,10 +526,10 @@ function validateForm() {
     }
 
     // People count validation
-    if (!peopleCount || peopleCount < 2 || peopleCount > 10) {
-        alert(currentLanguage === 'ar'
-            ? 'يُرجى إدخال عدد أشخاص بين 2 و 10'
-            : 'Please enter number of people between 2 and 10'
+    if (!peopleCount || peopleCount < 1 || peopleCount > 1000) {
+        showErrorModal(currentLanguage === 'ar'
+            ? 'يُرجى إدخال عدد أشخاص بين 1 و 1000'
+            : 'Please enter number of people between 1 and 1000'
         );
         document.getElementById('people-count').focus();
         return false;
@@ -428,7 +550,6 @@ function validateForm() {
 
 // Confirmation section functions
 function showConfirmationSection(formData) {
-    const confirmationSection = document.getElementById('confirmation-section');
     const confirmationDetails = document.getElementById('confirmation-details');
 
     // Set language attribute for styling
@@ -472,13 +593,10 @@ function showConfirmationSection(formData) {
     `;
 
     // Show confirmation section
+    const confirmationSection = document.getElementById('confirmation-section');
     confirmationSection.classList.remove('hidden');
 
-    // Smooth scroll to confirmation
-    confirmationSection.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-    });
+    // Stay in current position (no scrolling)
 }
 
 function hideConfirmationSection() {
@@ -494,6 +612,41 @@ function showConfirmationModal() {
 
 function hideConfirmationModal() {
     confirmationModal.classList.add('hidden');
+    document.body.style.overflow = 'auto'; // Restore scrolling
+}
+
+// Error/Notification modal functions
+function showErrorModal(message, isSuccess = false) {
+    const modalIcon = document.getElementById('modal-icon');
+    const modalTitle = document.getElementById('modal-title');
+
+    errorMessage.textContent = message;
+
+    if (isSuccess) {
+        // Success styling
+        modalIcon.textContent = '✅';
+        modalIcon.className = 'success-icon';
+        modalTitle.textContent = currentLanguage === 'ar' ? 'تم بنجاح' : 'Success';
+        errorModal.querySelector('.modal-content').className = 'modal-content success-modal-content';
+    } else {
+        // Error styling
+        modalIcon.textContent = '⚠️';
+        modalIcon.className = 'error-icon';
+        modalTitle.textContent = currentLanguage === 'ar' ? 'خطأ في الحجز' : 'Booking Error';
+        errorModal.querySelector('.modal-content').className = 'modal-content error-modal-content';
+    }
+
+    errorModal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+
+    // Focus on OK button
+    setTimeout(() => {
+        errorModalOk.focus();
+    }, 100);
+}
+
+function hideErrorModal() {
+    errorModal.classList.add('hidden');
     document.body.style.overflow = 'auto'; // Restore scrolling
 }
 
@@ -564,12 +717,62 @@ window.addEventListener('popstate', function() {
     // Close any open modals
     hideReservationForm();
     hideConfirmationModal();
+    hideErrorModal();
+    closeSidebar();
 });
 
 // Prevent form resubmission on page refresh
 if (window.history.replaceState) {
     window.history.replaceState(null, null, window.location.href);
 }
+
+// Mobile sidebar functions
+function openSidebar() {
+    sidebar.classList.add('open');
+    sidebarOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeSidebar() {
+    sidebar.classList.remove('open');
+    sidebarOverlay.classList.remove('active');
+    document.body.style.overflow = 'auto';
+}
+
+// Share website function
+function shareWebsite() {
+    const url = window.location.href;
+    const title = currentLanguage === 'ar' ? 'حلاوة - مطعم عائلي في خلدا' : 'Halaweh - Family Restaurant in Khalda';
+
+    if (navigator.share) {
+        // Use native share API if available
+        navigator.share({
+            title: title,
+            url: url
+        });
+    } else {
+        // Fallback to clipboard
+        navigator.clipboard.writeText(url).then(() => {
+            showErrorModal(currentLanguage === 'ar'
+                ? 'تم نسخ رابط الموقع إلى الحافظة!'
+                : 'Website link copied to clipboard!'
+            , true); // isSuccess = true
+        }).catch(() => {
+            // Fallback to prompt
+            prompt(currentLanguage === 'ar' ? 'انسخ الرابط:' : 'Copy the link:', url);
+        });
+    }
+}
+
+// Force scroll to top on page load and prevent hash scrolling
+window.addEventListener('load', function() {
+    // Remove hash from URL if present
+    if (window.location.hash) {
+        history.replaceState(null, null, window.location.pathname);
+    }
+    // Force scroll to top
+    window.scrollTo(0, 0);
+});
 
 // Add touch support for mobile devices
 if ('ontouchstart' in window) {
